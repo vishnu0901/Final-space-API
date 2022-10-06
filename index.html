@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API --> fetch</title>
+    <style>
+        #cont{
+            width: 80%;
+            margin: 50px auto;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 20px;
+        }
+        #cont>div{
+            padding: 20px;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+        }
+        #cont>div>img{
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="cont">
+
+    </div>
+</body>
+</html>
+<script>
+
+
+    const url1 = 'https://finalspaceapi.com/api/v0/character/';
+    async function getData(){
+        try{
+            let res = await fetch(url1);
+            let products = await res.json();
+            append(products);
+            console.log(products);
+        }
+        catch(err){
+            console.log(err);
+        }
+    };
+    getData();
+
+    const cont = document.getElementById('cont');
+    function append(data){
+        data.forEach(el => {
+            let img_url = document.createElement('img');
+            img_url.src = el.img_url;
+            let species = document.createElement('h2');
+            species.innerText = el.species;
+            let origin = document.createElement('p');
+            origin.innerText = "Origin : " + el.origin;
+            let abilities = document.createElement('p');
+            abilities.innerText = "Ability :  " + el.abilities[0];
+            let div = document.createElement('div');
+            div.append(img_url,species,origin,abilities);
+            cont.append(div);
+        });
+    }
+</script>
